@@ -12,7 +12,7 @@
 \usepackage{siunitx}
 
 \title{Visualizing Data using t-SNE}
-\author{Taran Lynn, Xiaoli Yang, Xiaoxin Chen}
+\author{Taran Lynn, Xiaoli Yang, Xiaoxing Chen}
 
 \begin{document}
 \maketitle
@@ -24,16 +24,41 @@
 % 
 \begin{frame}
   \frametitle{Isometric Mapping (Isomap)}
-  \framesubtitle{An extension of Multi-dimensional Scaling or Kernel PCA}
+  \framesubtitle{a non-linear dimensionality reduction method which tries to preserve the geodesic distances in the lower dimension}
 
-  \begin{itemize}
-    \item Nearest neighbor search
-    \item Shortest-path graph search
-    \item Partial eigenvalue decomposition
-  \end{itemize}
+  \begin{block}{1. Nearest neighbor search}
+    Isomap starts by creating a neighborhood network.
+  \end{block}
+
+  \begin{block}{2. Shortest-path graph search}
+    Isomap uses graph distance to the approximate geodesic distance between all pairs of points.
+  \end{block}
+
+  \begin{block}{3. Partial eigenvalue decomposition}
+    And then, through eigenvalue decomposition of the geodesic distance matrix, it finds the low dimensional embedding of the dataset.
+  \end{block}
+  
 
 \end{frame}
 
+
+\begin{frame}
+  \frametitle{Isometric Mapping (Isomap)}
+  \begin{block}{Complexity}
+    \[
+      \underbrace{O[D \log(k) N \log(N)]}_{\text{nearest neighbors search}}  + 
+      \underbrace{O[N^2(k + \log(N))]}_{\text{shortest-path graph search}} + 
+      \underbrace{O[d N^2]}_{\text{partial eigenvalue decomposition}}
+    \]
+    \begin{itemize}
+      \item $N$: number of training data points
+      \item $D$: input dimension
+      \item $k$: number of nearest neighbors
+      \item $d$: output dimension
+    \end{itemize}
+  \end{block}
+  
+\end{frame}
 % 
 % 
 % 
@@ -43,14 +68,54 @@
 % 
 \begin{frame}
   \frametitle{Locally Linear Embedding (LLE)}
-  \framesubtitle{A series of local Principal Component Analyses}
+  \framesubtitle{A topology preserving manifold learning method}
 
+  Assumptions:
   \begin{itemize}
-    \item Nearest neighbor search
-    \item Weight Matrix Construction
-    \item Partial Eigenvalue Decomposition
+    \item Data is well sampled i.e. density of the dataset is high.
+    \item Dataset lies on a smooth manifold.
   \end{itemize}
 
+  \begin{block}{1. Nearest neighbor search}
+    A distance metric is needed to measure the distance between the two points and classify them as neighbors. 
+    For example Euclidean, Mahalanobis, hamming and cosine. 
+    Either e-neighborhood or K-nearest neighbors will be used to create a neighborhood matrix.
+  \end{block}
+
+  \begin{block}{2. Weight Matrix Construction}
+    Each point of the dataset is reconstructed as a linear weighted sum of its neighbors.
+  \end{block}
+
+  \begin{block}{3. Partial Eigenvalue Decomposition}
+    Create each point in lower dimension using its neighbors and local $W$ matrix. 
+    The neighborhood graph and the local Weight matrix capture the topology of the manifold.
+  \end{block}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Locally Linear Embedding (LLE)}
+  \framesubtitle{A topology preserving manifold learning method}
+  
+  \begin{block}{Complexity}
+    \[
+      \underbrace{O[D \log(k) N \log(N)]}_{\text{nearest neighbors search}}  + 
+      \underbrace{O[D N k^3]}_{\text{weight matrix construction}} + 
+      \underbrace{O[d N^2]}_{\text{partial eigenvalue decomposition}}
+    \]
+    \begin{itemize}
+      \item $N$: number of training data points
+      \item $D$: input dimension
+      \item $k$: number of nearest neighbors
+      \item $d$: output dimension
+    \end{itemize}
+  \end{block}
+
+  
+  \begin{block}{Weakness: Sensitive to outliers and noise}
+    Datasets have a varying density and it is not always possible to have a smooth manifold.
+  \end{block}
+  
 \end{frame}
 
 % 
@@ -63,6 +128,20 @@
 \begin{frame}
   \frametitle{Sammon Mapping }
   \framesubtitle{}
+
+  Cost Function
+  \[
+    E_s = \frac{1}{\sum_i \sum_{j > i} d_{ij}} 
+    \sum_i \sum_{j > i} d_{ij}
+    \frac{(d_{ij} - \|r_i - r_j\|^2)^2}{d_{ij}}
+  \]
+
+  Steps
+  \begin{itemize}
+    \item Distance calculation
+    \item Distance matrix construction
+    \item Minimizing the projection error
+  \end{itemize}
 
 \end{frame}
 
