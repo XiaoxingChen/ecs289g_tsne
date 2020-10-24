@@ -21,7 +21,21 @@
 % 
 % introduction to Isomap
 % 
-% 
+%
+
+\begin{frame}
+  \frametitle{Isometric Mapping (Isomap)}
+  \framesubtitle{a non-linear dimensionality reduction method which tries to preserve the geodesic distances in the lower dimension}
+
+  In geometry, a \textbf{geodesic} is commonly a curve representing in some sense the shortest path 
+  between two points in a surface, or more generally in a Riemannian manifold.
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/geodesic_distance.pdf}
+  \end{figure}
+
+\end{frame}
+
 \begin{frame}
   \frametitle{Isometric Mapping (Isomap)}
   \framesubtitle{a non-linear dimensionality reduction method which tries to preserve the geodesic distances in the lower dimension}
@@ -131,9 +145,9 @@
 
   Cost Function
   \[
-    E_s = \frac{1}{\sum_i \sum_{j > i} d_{ij}} 
-    \sum_i \sum_{j > i} d_{ij}
-    \frac{(d_{ij} - \|r_i - r_j\|^2)^2}{d_{ij}}
+    E_s = \frac{1}{\sum_{ij}   \| x_i - x_j \|}
+    \sum_{i \neq j} 
+    \frac{(\| x_i - x_j \| - \|y_i - y_j\|^2)^2}{\| x_i - x_j \|}
   \]
 
   Steps
@@ -143,8 +157,48 @@
     \item Minimizing the projection error
   \end{itemize}
 
+  \begin{block}{Main Weakness}
+    the importance of retaining small pairwise
+  distances in the map is largely dependent on small differences in these pairwise distances. 
+  In particular, a small error in the model of two high-dimensional points that are extremely close together
+  results in a large contribution to the cost function.
+  \end{block}
+
 \end{frame}
 
+% 
+% 
+% 
+% t-SNE
+% 
+% 
+%
+\begin{frame}
+  \frametitle{t-SNE}
+  \framesubtitle{Keep the pairwise similarity in lower dimension}
+
+  
+  {Steps}
+  \begin{itemize}
+    \item Nearest neighbor search
+    \item Pairwise similarity calculation
+    \item Minimize dissimilarity cost function
+  \end{itemize}
+
+  {Complexity}
+    \begin{itemize}
+      \item Computational complexity: $O(N^2)$
+      \item Memory complexity: $O(N^2)$
+    \end{itemize}
+
+    {Weakness}
+    \begin{itemize}
+      \item Dimensionality reduction for other purposes (reduce to dimension $d > 3$)
+      \item Curse of intrinsic dimensionality 
+      \item Non-convexity of the t-SNE cost function
+    \end{itemize}    
+    
+\end{frame}
 
 % 
 % 
@@ -155,6 +209,7 @@
 %
 \begin{frame}
 \frametitle{Algorithm Comparison}
+\framesubtitle{Criteria: similarity preservation, overlapping, distortion, time}
 \begin{figure}
   \centering
   \includegraphics[width=\linewidth]{build/plot_compare_methods.pdf}
@@ -170,6 +225,7 @@
 %
 \begin{frame}
   \frametitle{Algorithm Comparison}
+  \framesubtitle{Criteria: similarity preservation, overlapping, distortion, time}
   \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{build/plot_handwrite_digits.pdf}
@@ -179,20 +235,32 @@
 % 
 % 
 % 
-% Weakness
+% Criteria
 % 
 % 
 %
 \begin{frame}
-  \frametitle{Weakness of t-SNE}
-  
-  \begin{itemize}
-    \item Dimensionality reduction for other purposes
-    \item Curse of intrinsic dimensionality
-    \item Non-convexity of the t-SNE cost function
-  \end{itemize}
+  \frametitle{Comparison and Conclusion}
+
+  \begin{block}{1. Nearest neighbor search}
+    All methods except Sammon mapping do NN Search. Sammon mapping scales the weight of closer neighbors by dividing a factor.
+  \end{block}
+
+  \begin{block}{2. Local structure preservation}
+    \begin{itemize}
+      \item Isomap: preserve geodesic distance (represented by graph distance)
+      \item LLE: preserve manifold topology
+      \item Sammon mapping: preserve weighted distances 
+      \item t-SNE: maximize pairwise dissimilarity(represented by conditional probabilities)
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{3. Solving methods}
+    Isomap and LLE use eigenvalue decomposition, Sammon mapping and t-SNE use gradient descent.
+  \end{block}
     
 \end{frame}
+
 % 
 % 
 % 
@@ -200,12 +268,8 @@
 % 
 % 
 %
-\begin{frame}
-  \frametitle{Conclusion}
-
-  Computational complexity: $O(n^2)$
-
-  Memory complexity: $O(n^2)$
+% \begin{frame}
+%   \frametitle{Conclusion}
     
-\end{frame}
+% \end{frame}
 \end{document}

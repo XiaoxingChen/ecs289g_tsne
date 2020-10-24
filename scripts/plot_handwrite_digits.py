@@ -109,10 +109,10 @@ for i, (label, method) in enumerate(methods.items()):
     print(2 + i + (i > 1))
     ax = fig.add_subplot(2, 3, 2 + i + (i > 1))
     
-    plot_embedding_axis(ax, Y, label)
+    plot_embedding_axis(ax, Y, "%s (%.2g sec)" % (label, t1 - t0))
 
 current_script_folder = os.path.dirname(os.path.realpath(sys.argv[0]))
 output_filename = os.path.join(current_script_folder, '..', 'build', os.path.basename(os.path.splitext(__file__)[0]) + '.pdf')
-fig.savefig(output_filename)
+fig.savefig(output_filename, bbox_inches='tight')
 
 # plt.show()

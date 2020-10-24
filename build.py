@@ -35,8 +35,9 @@ def updatedPlot(dirs, plot_name):
         raise RuntimeError("update plot failed")
 
 def runBuild(dirs, tex_filename):
-    updatedPlot(dirs, 'plot_compare_methods')
-    updatedPlot(dirs, 'plot_handwrite_digits')
+    plot_targets = ['plot_compare_methods', 'plot_handwrite_digits', 'geodesic_distance']
+    for target in plot_targets:
+        updatedPlot(dirs, target)
 
     os.makedirs(dirs.build_root, exist_ok=True)
     exit_code = os.system("pdflatex {}".format(dirs.sourceFilename(tex_filename)))
