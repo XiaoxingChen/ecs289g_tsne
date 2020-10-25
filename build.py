@@ -35,7 +35,12 @@ def updatedPlot(dirs, plot_name):
         raise RuntimeError("update plot failed")
 
 def runBuild(dirs, tex_filename):
-    plot_targets = ['plot_compare_methods', 'plot_handwrite_digits', 'geodesic_distance']
+    plot_targets = [
+        'plot_compare_methods', 
+        'plot_handwrite_digits',
+        'geodesic_distance',
+        'nearest_neighbor_viz',
+        'compare_so3']
     for target in plot_targets:
         updatedPlot(dirs, target)
 

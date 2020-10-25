@@ -12,6 +12,7 @@
 \usepackage{siunitx}
 
 \title{Visualizing Data using t-SNE}
+\subtitle{Section 3 Comparison of Dimensionality Reduction Methods}
 \author{Taran Lynn, Xiaoli Yang, Xiaoxing Chen}
 
 \begin{document}
@@ -32,6 +33,18 @@
   \begin{figure}
     \centering
     \includegraphics[width=0.7\linewidth]{build/geodesic_distance.pdf}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Isometric Mapping (Isomap)}
+  \framesubtitle{a non-linear dimensionality reduction method which tries to preserve the geodesic distances in the lower dimension}
+
+  Nearest neighbor search
+  \begin{figure}
+    \centering
+    \includegraphics[width=0.7\linewidth]{build/nearest_neighbor_viz.pdf}
   \end{figure}
 
 \end{frame}
@@ -235,7 +248,7 @@
 % 
 % 
 % 
-% Criteria
+% Comparison
 % 
 % 
 %
@@ -259,6 +272,42 @@
     Isomap and LLE use eigenvalue decomposition, Sammon mapping and t-SNE use gradient descent.
   \end{block}
     
+\end{frame}
+
+% 
+% 
+% 
+% plot compare so3
+% 
+% 
+%
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3.pdf}
+  \end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3_2.pdf}
+  \end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3_3.pdf}
+  \end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3_4.pdf}
+  \end{figure}
 \end{frame}
 
 % 
