@@ -15,7 +15,7 @@ def geodesicLineOnSphere(xx, yy, zz, resolution=20, c=np.zeros(3), r=1.):
     return geodesic_line.T
 
 
-fig = plt.figure(figsize=[6.5,6])
+fig = plt.figure(figsize=[6,6.2])
 ax = fig.gca(projection='3d')
 # ax.set_aspect("equal")
 

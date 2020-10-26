@@ -40,7 +40,8 @@ def runBuild(dirs, tex_filename):
         'plot_handwrite_digits',
         'geodesic_distance',
         'nearest_neighbor_viz',
-        'compare_so3']
+        'compare_so3',
+        'plot_tilt_cube']
     for target in plot_targets:
         updatedPlot(dirs, target)
 
