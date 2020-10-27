@@ -193,7 +193,7 @@
   \[
     E_s = \frac{1}{\sum_{ij}   \| x_i - x_j \|}
     \sum_{i \neq j} 
-    \frac{(\| x_i - x_j \| - \|y_i - y_j\|^2)^2}{\| x_i - x_j \|}
+    \frac{(\| x_i - x_j \| - \|y_i - y_j\|)^2}{\| x_i - x_j \|}
   \]
 
   Steps
@@ -249,6 +249,65 @@
 % 
 % 
 % 
+% plot compare so3
+% 
+% 
+%
+\begin{frame}
+  \frametitle{Test with 3D Rotation Group}
+  
+  Rotation Axis:
+  $\alpha_1 = (1,1,1), \alpha_2 = (-1,1,1), \alpha_3 = (1,-1,1), \alpha_4 = (1,1,-1)$
+  Circles intersect at:
+  \[
+    R = 
+    \left[\begin{matrix}
+         1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 
+    \end{matrix}  \right]
+  \]
+  \begin{figure}
+    \centering
+    \includegraphics[width=1.\linewidth]{build/plot_tilt_cube.pdf}
+  \end{figure}
+    
+\end{frame}
+
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \framesubtitle{Criteria: similarity preservation, overlapping, distortion, time}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3.pdf}
+  \end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \framesubtitle{Criteria: similarity preservation, overlapping, distortion, time}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3_2.pdf}
+  \end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \framesubtitle{Criteria: similarity preservation, overlapping, distortion, time}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3_3.pdf}
+  \end{figure}
+\end{frame}
+\begin{frame}
+  \frametitle{Algorithm Comparison}
+  \framesubtitle{Criteria: similarity preservation, overlapping, distortion, time}
+  \begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{build/compare_so3_4.pdf}
+  \end{figure}
+\end{frame}
+
+% 
+% 
+% 
 % Comparison
 % 
 % 
@@ -265,7 +324,7 @@
       \item Isomap: preserve geodesic distance (represented by graph distance)
       \item LLE: preserve manifold topology
       \item Sammon mapping: preserve weighted distances 
-      \item t-SNE: maximize pairwise dissimilarity(represented by conditional probabilities)
+      \item t-SNE: minimize pairwise dissimilarity(represented by conditional probabilities)
     \end{itemize}
   \end{block}
 
@@ -274,69 +333,4 @@
   \end{block}
     
 \end{frame}
-
-% 
-% 
-% 
-% plot compare so3
-% 
-% 
-%
-\begin{frame}
-  \frametitle{Test with 3D Rotation Group}
-  
-  Rotation Axis:
-  \begin{enumerate}
-    \item $\alpha = (1,1,1)$
-    \item $\alpha = (-1,1,1)$
-    \item $\alpha = (1,-1,1)$
-    \item $\alpha = (1,1,-1)$
-  \end{enumerate}
-  \begin{figure}
-    \centering
-    \includegraphics[width=0.5\linewidth]{build/plot_tilt_cube.pdf}
-  \end{figure}
-    
-\end{frame}
-
-\begin{frame}
-  \frametitle{Algorithm Comparison}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{build/compare_so3.pdf}
-  \end{figure}
-\end{frame}
-\begin{frame}
-  \frametitle{Algorithm Comparison}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{build/compare_so3_2.pdf}
-  \end{figure}
-\end{frame}
-\begin{frame}
-  \frametitle{Algorithm Comparison}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{build/compare_so3_3.pdf}
-  \end{figure}
-\end{frame}
-\begin{frame}
-  \frametitle{Algorithm Comparison}
-  \begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{build/compare_so3_4.pdf}
-  \end{figure}
-\end{frame}
-
-% 
-% 
-% 
-% Conclusion
-% 
-% 
-%
-% \begin{frame}
-%   \frametitle{Conclusion}
-    
-% \end{frame}
 \end{document}

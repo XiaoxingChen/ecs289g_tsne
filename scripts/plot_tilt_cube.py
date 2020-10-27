@@ -4,6 +4,8 @@ from mpl_toolkits.mplot3d import Axes3D
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection, Line3DCollection
 import sys
 import os
+import numpy as np
+from scipy.spatial.transform import Rotation as R
 
 def cubify_cube_definition(cube_definition):
     cube_definition_array = [
@@ -80,7 +82,7 @@ def get_bounding_box(points):
     ]
 
 
-def plot_cube(cube_definition):
+def plot_cube(cube_definition, ax):
     points = cube_vertices(cube_definition)
 
     edges = [
@@ -91,9 +93,6 @@ def plot_cube(cube_definition):
         [points[0], points[2], points[4], points[1]],
         [points[3], points[6], points[7], points[5]]
     ]
-
-    fig = plt.figure(figsize=[6,6.2])
-    ax = fig.add_subplot(111, projection='3d')
 
     faces = Poly3DCollection(edges, linewidths=1, edgecolors='k')
     faces.set_facecolor((0,0,1,0.1))
@@ -112,16 +111,44 @@ def plot_cube(cube_definition):
     # ax.set_aspect('equal')
     plt.axis('off')
     ax.grid(False)
+    ax.set_title("Rotation in 3D space")
 
     ax.view_init(32, -80)
     ax.dist = 6
 
-    current_script_folder = os.path.dirname(os.path.realpath(sys.argv[0]))
-    output_filename = os.path.join(current_script_folder, '..', 'build', os.path.basename(os.path.splitext(__file__)[0]) + '.pdf')
-    fig.savefig(output_filename, bbox_inches='tight')
-    print("replot {}".format(output_filename))
-    plt.show()
+def plot_4_circles(ax):
+    n_points = 1000
+    axis_num = 4
+    rot_axis = [np.array([1,1,-1]) / 3**0.5, np.array([-1,1,1]) / 3**0.5, np.array([1,-1,1]) / 3**0.5, np.array([1,1,1]) / 3**0.5]
+    n_points = (n_points // axis_num) * axis_num
+    theta = np.linspace(0.0, 2* np.pi, n_points // axis_num)
+    color = np.linspace(0, 1, n_points)
+    rot_vecs = np.vstack([np.outer(theta, rot_axis[i]) for i in range(axis_num)])
+
+    rots = R.from_rotvec(rot_vecs)
+    X = np.reshape(rots.as_matrix(), (-1, 9))
+
+    n_neighbors = 10
+    n_components = 2
+    
+    plt.axis('off')
+    ax.set_title("Orientations")
+    ax.grid(False)
+    ax.scatter(X[:, 0], X[:, 1], X[:, 2], c=color, cmap=plt.cm.Spectral)
+    ax.view_init(-9, 164)
+    ax.dist = 7
 
 
 cube_definition = cubify_cube_definition([(0,0,0), (0,3,0), (1,1,0.3)])
-plot_cube(cube_definition)
+
+fig = plt.figure(figsize=[12,6])
+ax1 = fig.add_subplot(121, projection='3d')
+plot_cube(cube_definition, ax1)
+ax2 = fig.add_subplot(122, projection='3d')
+plot_4_circles(ax2)
+
+current_script_folder = os.path.dirname(os.path.realpath(sys.argv[0]))
+output_filename = os.path.join(current_script_folder, '..', 'build', os.path.basename(os.path.splitext(__file__)[0]) + '.pdf')
+fig.savefig(output_filename, bbox_inches='tight')
+print("replot {}".format(output_filename))
+# plt.show()
